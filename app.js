@@ -1,7 +1,7 @@
 const ticketInfo = [
 	{
 		id: '1xyz',
-		price: 500,
+		price: 150,
 		class: 'First Class',
 		quantity: 1,
 	},
@@ -39,35 +39,109 @@ function calculateTotalPrice(ticketInfo) {
 }
 calculateTotalPrice(ticketInfo);
 
-// Ticket Increases
-
-function increasesTicket(ticketUniqueId) {
+// Update Ticket Information
+function ticketInfoUpdate(ticketUniqueId, operationType) {
 	let quantity = document.querySelector(`#class${ticketUniqueId}`);
-	quantity.value = parseInt(quantity.value) + 1;
 	for (let i = 0; i < ticketInfo.length; i++) {
 		if (ticketUniqueId == ticketInfo[i].id) {
-			ticketInfo[i].quantity = ticketInfo[i].quantity + 1;
-			console.log(ticketInfo[i].quantity);
-			subTotalPrice = subTotalPrice + ticketInfo[i].price;
+			if (operationType == 'decrease') {
+				// validate ticket quantity if less then 1 then show some massage
+				if (ticketInfo[i].quantity > 1) {
+					// since  i can't manage  realtime event from dom, by input data in input field that's why i product increases  and multiply  using plus and minus button
+					ticketInfo[i].quantity = ticketInfo[i].quantity - 1;
+					subTotalPrice = subTotalPrice - ticketInfo[i].price;
+					// quantity.value = parseInt(quantity.value) - 1;
+
+					// quantity value Direct update in dom
+					quantity.value = ticketInfo[i].quantity;
+				} else {
+					massage('sorry minimum order 1');
+				}
+			} else {
+				ticketInfo[i].quantity = ticketInfo[i].quantity + 1;
+				subTotalPrice = subTotalPrice + ticketInfo[i].price;
+				// quantity value Direct update in dom
+				// quantity.value = parseInt(quantity.value) + 1;
+				quantity.value = ticketInfo[i].quantity;
+				console.log(ticketInfo[i].quantity);
+			}
 		}
 	}
+	// After all re render total price
 	renderTotalPrice(subTotalPrice);
+}
+
+// Massage
+function massage(msg) {
+	const massageDom = document.querySelector('.massage');
+	massageDom.innerHTML = msg;
+	document.querySelector('.model').style.display = 'flex';
+}
+
+// Massage Close
+document.querySelector('#close').addEventListener('click', function () {
+	document.querySelector('.model').style.display = 'none';
+});
+
+// Ticket Increases
+function increasesTicket(ticketUniqueId) {
+	ticketInfoUpdate(ticketUniqueId, 'increases');
 	console.log(ticketInfo);
 }
 
 // Ticket Decrease
 function decreaseTicket(ticketUniqueId) {
-	let quantity = document.querySelector(`#class${ticketUniqueId}`);
-	for (let i = 0; i < ticketInfo.length; i++) {
-		if (ticketUniqueId == ticketInfo[i].id) {
-			if (ticketInfo[i].quantity > 1) {
-				quantity.value = parseInt(quantity.value) - 1;
-				ticketInfo[i].quantity = ticketInfo[i].quantity - 1;
-				console.log(ticketInfo[i].quantity);
-				subTotalPrice = subTotalPrice - ticketInfo[i].price;
-			}
-		}
-	}
-	renderTotalPrice(subTotalPrice);
+	ticketInfoUpdate(ticketUniqueId, 'decrease');
 	console.log(ticketInfo);
 }
+
+// Buy option
+document.querySelector('#buy__btn').addEventListener('click', function () {
+	const mas = `
+        <div>
+        <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Class</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>${ticketInfo[0].class}</td>
+            <td>${ticketInfo[0].quantity}</td>
+            <td>$ ${ticketInfo[0].price}</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>${ticketInfo[1].class}</td>
+            <td>${ticketInfo[1].quantity}</td>
+            <td>$ ${ticketInfo[1].price}</td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td colspan="2">Sub Total</td>
+            <td>$ ${subTotalPrice}</td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td colspan="2">TAX/VAT (10%)</td>
+            <td>$ ${(10 / 100) * subTotalPrice}</td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td colspan="2">Total</td>
+            <td>$ ${(10 / 100) * subTotalPrice + subTotalPrice}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Your Ticket Is Confirmed </p>
+        </div>
+    `;
+	console.log('e');
+	massage(mas);
+});

@@ -127,3 +127,45 @@ a.active {
 .plus__btn {
 	cursor: pointer;
 }
+
+/* Model */
+
+.model {
+	width: 100%;
+	background-color: #00000054;
+	position: absolute;
+	left: 0;
+	height: 100vh;
+	top: 0;
+	justify-content: center;
+	align-items: center;
+	display: none;
+	flex-direction: column;
+}
+
+.massage {
+	background-color: aliceblue;
+	width: 50%;
+	height: 55%;
+	padding: 30px;
+	border-radius: 10px;
+	text-align: center;
+}
+.massage p {
+	font-size: 25px;
+	font-weight: 600;
+	color: #f3f5ff;
+	margin-top: 50px;
+}
+.model button {
+	padding: 10px 20px;
+	margin-top: 10px;
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	color: #fff;
+	font-weight: 500;
+	background-color: #3352f2;
+}
