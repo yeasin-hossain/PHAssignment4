@@ -3,7 +3,8 @@ const ticketInfo = [
 	{
 		from: null,
 		to: null,
-		date: null,
+		departureDate: null,
+		returnDate: 'N / A',
 		id: '1xyz',
 		price: 150,
 		class: 'First Class',
@@ -12,7 +13,8 @@ const ticketInfo = [
 	{
 		from: null,
 		to: null,
-		date: null,
+		departureDate: null,
+		returnDate: null,
 		id: '2xyz',
 		price: 100,
 		class: 'Economy Class',
@@ -62,7 +64,7 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 					// quantity.value = parseInt(quantity.value) - 1;
 					quantity.value = ticketInfo[i].quantity;
 				} else {
-					massage('<p>Sorry Minimum Order Quantity 1<p/>');
+					massage('<p>Sorry Minimum Booking Quantity Is 1<p/>');
 				}
 			} else {
 				ticketInfo[i].quantity = ticketInfo[i].quantity + 1;
@@ -131,6 +133,8 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
             <th scope="col">Class</th>
             <th scope="col">From</th>
             <th scope="col">To</th>
+            <th scope="col">Departure Date</th>
+            <th scope="col">Return Date</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
           </tr>
@@ -141,6 +145,8 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
             <td>${ticketInfo[0].class}</td>
             <td>${ticketInfo[0].from}</td>
             <td>${ticketInfo[0].to}</td>
+            <td>${ticketInfo[0].departureDate}</td>
+            <td>${ticketInfo[0].returnDate}</td>
             <td>${ticketInfo[0].quantity}</td>
             <td>$ ${ticketInfo[0].price}</td>
           </tr>
@@ -149,22 +155,24 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
             <td>${ticketInfo[1].class}</td>
             <td>${ticketInfo[0].from}</td>
             <td>${ticketInfo[0].to}</td>
+            <td>${ticketInfo[0].departureDate}</td>
+            <td>${ticketInfo[0].returnDate}</td>
             <td>${ticketInfo[1].quantity}</td>
             <td>$ ${ticketInfo[1].price}</td>
           </tr>
           <tr>
             <th scope="row"></th>
-            <td colspan="4">Sub Total</td>
+            <td colspan="6">Sub Total</td>
             <td>$ ${subTotalPrice}</td>
           </tr>
           <tr>
             <th scope="row"></th>
-            <td colspan="4">TAX/VAT (10%)</td>
+            <td colspan="6">TAX/VAT (10%)</td>
             <td>$ ${(10 / 100) * subTotalPrice}</td>
           </tr>
           <tr>
             <th scope="row"></th>
-            <td colspan="4">Total</td>
+            <td colspan="6">Total</td>
             <td>$ ${(10 / 100) * subTotalPrice + subTotalPrice}</td>
           </tr>
         </tbody>
@@ -174,10 +182,29 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
         </div>
     `;
 
-	if (ticketInfo[0].from != null && ticketInfo[0].to != null) {
+	if (
+		ticketInfo[0].from != null &&
+		ticketInfo[0].to != null &&
+		ticketInfo[0].departureDate != null
+	) {
 		massage(buyMassage);
 	} else {
-		massage('<p>Please Choice Your Destination First</p>');
+		massage('<p>Please Choice Your Destination And Departure Date First</p>');
 	}
 	// console.log('error');
 });
+
+// document
+// 	.querySelector('#departure')
+// 	.addEventListener('onchange ', function (e) {
+// 		console.log(e.value);
+// 	});
+
+function departureDate(e) {
+	// console.log(e.value);
+	setDestination('departureDate', e.value);
+}
+function returnDate(e) {
+	// console.log(e.value);
+	setDestination('returnDate', e.value);
+}
