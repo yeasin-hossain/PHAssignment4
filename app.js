@@ -1,3 +1,13 @@
+/**
+ *                      Project Description
+ * Project Name:  Discover Fly
+ * Project Date: 29-01-2021
+ * Submit Date: 30-01-2021
+ * Courser Owner: Programming Hero
+ * Develop By : Shanto Rahman(Yeasin)
+ *Assignment Number: 4
+ */
+
 // initial Demo Ticket Information and while confirm ticket this format will send to serve
 const ticketInfo = [
 	{
@@ -37,12 +47,12 @@ function renderTotalPrice(totalPrice) {
 	totalPriceDom.innerText = `$ ${totalPrice + tex}`;
 }
 
-// Calculate total price from ticket info
+// Calculate total price from ticket info and initial render
 function calculateTotalPrice(ticketInfo) {
 	let total = 0;
-	ticketInfo.map((price) => {
-		total = price.price + total;
-	});
+	for (let i = 0; i < ticketInfo.length; i++) {
+		total = ticketInfo[i].price + total;
+	}
 	subTotalPrice = total;
 	renderTotalPrice(subTotalPrice);
 }
@@ -66,6 +76,7 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 				} else {
 					massage('<p>Sorry Minimum Booking Quantity Is 1<p/>');
 				}
+				// else Ticket increases
 			} else {
 				ticketInfo[i].quantity = ticketInfo[i].quantity + 1;
 				subTotalPrice = subTotalPrice + ticketInfo[i].price;
@@ -94,7 +105,7 @@ document.querySelector('#close').addEventListener('click', function () {
 });
 
 // Destination setup
-function setDestination(destinationType, destination) {
+function setTravelInfo(destinationType, destination) {
 	for (let i = 0; i < ticketInfo.length; i++) {
 		ticketInfo[i][destinationType] = destination;
 	}
@@ -102,13 +113,25 @@ function setDestination(destinationType, destination) {
 
 //journey   From
 document.querySelector('#from').addEventListener('keyup', function (e) {
-	setDestination('from', e.target.value);
+	setTravelInfo('from', e.target.value);
 });
 
 //journey   To
 document.querySelector('#to').addEventListener('keyup', function (e) {
-	setDestination('to', e.target.value);
+	setTravelInfo('to', e.target.value);
 });
+
+// Journey Date
+function departureDate(e) {
+	// console.log(e.value);
+	setTravelInfo('departureDate', e.value);
+}
+
+// Return Date
+function returnDate(e) {
+	// console.log(e.value);
+	setTravelInfo('returnDate', e.value);
+}
 
 // Ticket Increases
 function increasesTicket(ticketUniqueId) {
@@ -193,18 +216,3 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
 	}
 	// console.log('error');
 });
-
-// document
-// 	.querySelector('#departure')
-// 	.addEventListener('onchange ', function (e) {
-// 		console.log(e.value);
-// 	});
-
-function departureDate(e) {
-	// console.log(e.value);
-	setDestination('departureDate', e.value);
-}
-function returnDate(e) {
-	// console.log(e.value);
-	setDestination('returnDate', e.value);
-}
