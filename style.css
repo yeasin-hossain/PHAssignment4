@@ -154,7 +154,7 @@ a.active {
 .massage p {
 	font-size: 25px;
 	font-weight: 600;
-	color: #f3f5ff;
+	/* color: #f3f5ff; */
 	margin-top: 50px;
 }
 .model button {
