@@ -68,7 +68,7 @@
                 <div>
                     <label for="">Economy ($100)</label>
                       <!-- while Rendering Ticket info dynamically  Ticket Unique id will be in input id  -->
-                    <input id="class2xyz" class="inp-style inp-width" type="number" name="" value="1">
+                    <input id="class2xyz" onkeyup="updateQun(this,'2xyz')" class="inp-style inp-width" type="number" name="" value="1">
                 </div>
                 <div class="plus-minus-btn">
                     <p> 
@@ -93,7 +93,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p id="tex">$50</p>
+                        <p id="tax">$50</p>
                     </div>
                 </div>
                 <hr>
@@ -117,7 +117,7 @@
     <!-- Notification Model -->
     <section>
         <div class="model">
-            <div class="massage">
+            <div class="message">
                 <p>Sorry</p>
             </div>
             <div >

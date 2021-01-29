@@ -38,13 +38,13 @@ let subTotalPrice = 0;
 // render total price
 const subTotalPriceDom = document.querySelector('#subTotal__Price');
 const totalPriceDom = document.querySelector('#total__price');
-const totalTexDom = document.querySelector('#tex');
+const totalTaxDom = document.querySelector('#tax');
 function renderTotalPrice(totalPrice) {
-	const tex = (10 / 100) * totalPrice;
-	const texTotal = tex.toFixed(2);
+	const tax = (10 / 100) * totalPrice;
+	const taxTotal = tax.toFixed(2);
 	subTotalPriceDom.innerText = `$ ${totalPrice}`;
-	totalTexDom.innerText = `$ ${texTotal}`;
-	totalPriceDom.innerText = `$ ${totalPrice + tex}`;
+	totalTaxDom.innerText = `$ ${taxTotal}`;
+	totalPriceDom.innerText = `$ ${totalPrice + tax}`;
 }
 
 // Calculate total price from ticket info and initial render
@@ -64,9 +64,8 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 	for (let i = 0; i < ticketInfo.length; i++) {
 		if (ticketUniqueId == ticketInfo[i].id) {
 			if (operationType == 'decrease') {
-				// validate ticket quantity if less then 1 then show some massage
+				// validate ticket quantity if less then 1 then show some message
 				if (ticketInfo[i].quantity > 1) {
-					// since  i can't manage  realtime event from dom, by input data in input field that's why i product increases  and multiply  using plus and minus button event
 					ticketInfo[i].quantity = ticketInfo[i].quantity - 1;
 					subTotalPrice = subTotalPrice - ticketInfo[i].price;
 
@@ -74,7 +73,7 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 					// quantity.value = parseInt(quantity.value) - 1;
 					quantity.value = ticketInfo[i].quantity;
 				} else {
-					massage('<p>Sorry Minimum Booking Quantity Is 1<p/>');
+					message('<p>Sorry Minimum Booking Quantity Is 1<p/>');
 				}
 				// else Ticket increases
 			} else {
@@ -84,7 +83,6 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 				// quantity value Direct update in dom
 				// quantity.value = parseInt(quantity.value) + 1;
 				quantity.value = ticketInfo[i].quantity;
-				console.log(ticketInfo[i].quantity);
 			}
 		}
 	}
@@ -92,14 +90,14 @@ function ticketInfoUpdate(ticketUniqueId, operationType) {
 	renderTotalPrice(subTotalPrice);
 }
 
-// Massage
-function massage(msg) {
-	const massageDom = document.querySelector('.massage');
-	massageDom.innerHTML = msg;
+// notification Message
+function message(msg) {
+	const messageDom = document.querySelector('.message');
+	messageDom.innerHTML = msg;
 	document.querySelector('.model').style.display = 'flex';
 }
 
-// Massage Close
+// Message Close
 document.querySelector('#close').addEventListener('click', function () {
 	document.querySelector('.model').style.display = 'none';
 });
@@ -136,18 +134,16 @@ function returnDate(e) {
 // Ticket Increases
 function increasesTicket(ticketUniqueId) {
 	ticketInfoUpdate(ticketUniqueId, 'increases');
-	console.log(ticketInfo);
 }
 
 // Ticket Decrease
 function decreaseTicket(ticketUniqueId) {
 	ticketInfoUpdate(ticketUniqueId, 'decrease');
-	console.log(ticketInfo);
 }
 
-// Buy option
+// Buy option button
 document.querySelector('#buy__btn').addEventListener('click', function () {
-	const buyMassage = `
+	const buyMessage = `
         <div>
         <table class="table table-striped">
         <thead>
@@ -201,7 +197,7 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
         </tbody>
       </table>
 
-      <p>Your Ticket Is Confirmed </p>
+      <p>Your Ticket Is Confirmed. </p>
         </div>
     `;
 
@@ -210,9 +206,13 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
 		ticketInfo[0].to != null &&
 		ticketInfo[0].departureDate != null
 	) {
-		massage(buyMassage);
+		message(buyMessage);
 	} else {
-		massage('<p>Please Choice Your Destination And Departure Date First</p>');
+		message('<p>Please Choice Your Destination And Departure Date First.</p>');
 	}
 	// console.log('error');
 });
+
+const updateQun = (e, id) => {
+	console.log(e.value);
+};
