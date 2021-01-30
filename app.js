@@ -212,7 +212,3 @@ document.querySelector('#buy__btn').addEventListener('click', function () {
 	}
 	// console.log('error');
 });
-
-const updateQun = (e, id) => {
-	console.log(e.value);
-};
